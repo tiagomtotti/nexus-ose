@@ -9,85 +9,17 @@
          "kind": "ServiceAccount",
          "apiVersion": "v1",
          "metadata": {
-            "name": "nexus",
-            "namespace": "ci"
-         }
-      },
-      {
-         "kind": "BuildConfig",
-         "apiVersion": "v1",
-         "metadata": {
-            "name": "nexus3",
-            "namespace": "ci"
-         },
-         "spec": {
-            "triggers": [
-               {
-                  "type": "GitHub",
-                  "github": {
-                     "secret": "secret"
-                  }
-               },
-               {
-                  "type": "Generic",
-                  "generic": {
-                     "secret": "secret"
-                  }
-               },
-               {
-                  "type": "ImageChange",
-                  "imageChange": {}
-               },
-               {
-                  "type": "ConfigChange"
-               }
-            ],
-            "source": {
-               "type": "Git",
-               "git": {
-                  "uri": "https://github.com/jorgemoralespou/nexus-ose",
-                  "ref": "master"
-               },
-               "contextDir": "nexus/nexus3-container"
-            },
-            "strategy": {
-               "type": "Docker",
-               "dockerStrategy": {
-                  "from": {
-                     "kind": "DockerImage",
-                     "name": "docker.io/sonatype/nexus3:3.0.2"
-                  }
-               }
-            },
-            "output": {
-               "to": {
-                  "kind": "ImageStreamTag",
-                  "name": "nexus3:latest",
-                  "namespace": "ci"
-               }
-            },
-            "resources": {}
+            "name": "nexus"
          }
       },
       {
          "kind": "ImageStream",
          "apiVersion": "v1",
          "metadata": {
-            "name": "sonatype-nexus3"
+            "name": "nexus3"
          },
          "spec": {
-            "dockerImageRepository": "docker.io/sonatype/nexus3:3.0.2"
-         }
-      },
-      {
-         "kind": "ImageStream",
-         "apiVersion": "v1",
-         "metadata": {
-            "name": "nexus3",
-            "namespace": "ci"
-         },
-         "spec": {
-            "dockerImageRepository": "",
+            "dockerImageRepository": "tiagomtotti/nexus3",
             "tags": [
                {
                   "name": "latest"
@@ -100,7 +32,6 @@
          "apiVersion": "v1",
          "metadata": {
             "name": "nexus3-ephemeral",
-            "namespace": "ci",
             "annotations": {
                "description": "Nexusx3 service, with ephemeral storage. Scaling to more than one replica is not supported",
                "tags": "repository-managers,nexus3"
@@ -140,8 +71,7 @@
                "kind": "DeploymentConfig",
                "apiVersion": "v1",
                "metadata": {
-                  "name": "nexus3",
-                  "namespace": "ci"
+                  "name": "nexus3"
                },
                "spec": {
                   "strategy": {
@@ -179,8 +109,7 @@
                            ],
                            "from": {
                               "kind": "ImageStreamTag",
-                              "name": "${IMAGE_NAME}:${IMAGE_TAG}",
-                              "namespace": "ci"
+                              "name": "${IMAGE_NAME}:${IMAGE_TAG}"
                            }
                         }
                      }
@@ -267,8 +196,7 @@
                "kind": "Route",
                "apiVersion": "v1",
                "metadata": {
-                  "name": "nexus3",
-                  "namespace": "ci"
+                  "name": "nexus3"
                },
                "spec": {
                   "host": "${APPLICATION_HOSTNAME}",
@@ -282,8 +210,7 @@
                "kind": "Service",
                "apiVersion": "v1",
                "metadata": {
-                  "name": "nexus3",
-                  "namespace": "ci"
+                  "name": "nexus3"
                },
                "spec": {
                   "ports": [
@@ -307,7 +234,6 @@
          "apiVersion": "v1",
          "metadata": {
             "name": "nexus3-persistent",
-            "namespace": "ci",
             "annotations": {
                "description": "Nexus3 service, with persistent storage. Scaling to more than one replica is not supported",
                "tags": "repository-managers,nexus3"
@@ -353,8 +279,7 @@
                "kind": "PersistentVolumeClaim",
                "apiVersion": "v1",
                "metadata": {
-                  "name": "nexus3-claim",
-                  "namespace": "ci"
+                  "name": "nexus3-claim"
                },
                "spec": {
                   "accessModes": [
@@ -372,8 +297,7 @@
                "kind": "DeploymentConfig",
                "apiVersion": "v1",
                "metadata": {
-                  "name": "nexus3",
-                  "namespace": "ci"
+                  "name": "nexus3"
                },
                "spec": {
                   "strategy": {
@@ -410,8 +334,7 @@
                            ],
                            "from": {
                               "kind": "ImageStreamTag",
-                              "name": "${IMAGE_NAME}:${IMAGE_TAG}",
-                              "namespace": "ci"
+                              "name": "${IMAGE_NAME}:${IMAGE_TAG}"
                            }
                         }
                      }
@@ -498,8 +421,7 @@
                "kind": "Route",
                "apiVersion": "v1",
                "metadata": {
-                  "name": "nexus3",
-                  "namespace": "ci"
+                  "name": "nexus3"
                },
                "spec": {
                   "host": "${APPLICATION_HOSTNAME}",
@@ -513,8 +435,7 @@
                "kind": "Service",
                "apiVersion": "v1",
                "metadata": {
-                  "name": "nexus3",
-                  "namespace": "ci"
+                  "name": "nexus3"
                },
                "spec": {
                   "ports": [

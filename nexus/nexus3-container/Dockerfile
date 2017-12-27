@@ -16,7 +16,8 @@ RUN yum install -y wget \
   && /usr/local/bin/fix-permissions.sh /opt/sonatype \
   && chmod 775 /usr/local/bin/* \
   && chown nexus:nexus /usr/local/bin/* \
-  && chown -R nexus:nexus /opt/sonatype
+  && chown -R nexus:nexus /opt/sonatype \
+  && chown -R nexus:nexus /nexus-data
 
 # switch to nexus
 USER 200
